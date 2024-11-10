@@ -1,0 +1,203 @@
+// ///#Zad1
+// open System
+
+// let bmiCategory bmi =
+//     if bmi < 18.5 then "Niedowaga"
+//     elif bmi < 24.9 then "Waga prawidłowa"
+//     elif bmi < 29.9 then "Nadwaga"
+//     else "Otyłość"
+
+// [<EntryPoint>]
+// let main _ =
+//     printf "Podaj wagę (kg): " 
+//     let weight = Console.ReadLine() |> float
+//     printf "Podaj wzrost (cm): " 
+//     let height = Console.ReadLine() |> float / 100.0
+    
+//     let bmi = weight / (height ** 2.0)
+//     printfn "Twoje BMI: %.2f\nKategoria: %s" bmi (bmiCategory bmi)
+//     0
+// #
+
+// ///Zad2
+
+// open System
+
+
+// let exchangeRates = 
+//     Map [
+//         ("USD", 4.0)
+//         ("EUR", 4.5)
+//         ("GBP", 5.0)
+//         ("PLN", 1.0)
+//     ]
+
+// let convertCurrency amount sourceCurrency targetCurrency =
+//     match Map.tryFind sourceCurrency exchangeRates, Map.tryFind targetCurrency exchangeRates with
+//     | Some rateSource, Some rateTarget ->
+//         let plnAmount = amount * rateSource
+//         let targetAmount = plnAmount / rateTarget
+//         Some targetAmount
+//     | _ -> None
+
+// [<EntryPoint>]
+// let main _ =
+//     printf "Kwota do przeliczenia: "
+//     let amount = Console.ReadLine() |> float
+//     printf "Waluta źródłowa (np. USD, EUR, GBP, PLN): "
+//     let sourceCurrency = Console.ReadLine().ToUpper()
+//     printf "Waluta docelowa (np. USD, EUR, GBP, PLN): "
+//     let targetCurrency = Console.ReadLine().ToUpper()
+
+//     match convertCurrency amount sourceCurrency targetCurrency with
+//     | Some convertedAmount -> printfn "Przeliczona kwota: %.2f %s" convertedAmount targetCurrency
+//     | None -> printfn "Nieznana waluta."
+
+//     0
+
+// #Zad3
+
+// open System
+// open System.Text.RegularExpressions
+
+// let analyzeText text =
+//     let words = Regex.Split(text, @"\W+") |> Array.filter (fun w -> w <> "")
+//     let wordCount = words.Length
+//     let charCount = text.Replace(" ", "").Length
+//     let wordFrequency = 
+//         words |> Array.fold (fun acc word -> Map.change word (function | Some v -> Some (v + 1) | None -> Some 1) acc) Map.empty
+//     let mostCommonWord = wordFrequency |> Map.maxBy snd |> fst
+//     (wordCount, charCount, mostCommonWord)
+
+// [<EntryPoint>]
+// let main _ =
+//     printf "Wprowadź tekst: "
+//     let text = Console.ReadLine()
+    
+//     let wordCount, charCount, mostCommonWord = analyzeText text
+//     printfn "Liczba słów: %d" wordCount
+//     printfn "Liczba znaków (bez spacji): %d" charCount
+//     printfn "Najczęściej występujące słowo: %s" mostCommonWord
+
+//     0
+
+// #Zad4
+
+// open System
+
+// // Definicja struktury konta
+// type Account = { Id: int; Balance: float }
+
+// let mutable accounts = Map.empty<int, Account>
+// let mutable accountIdCounter = 1
+
+// let createAccount () =
+//     let account = { Id = accountIdCounter; Balance = 0.0 }
+//     accounts <- Map.add accountIdCounter account accounts
+//     accountIdCounter <- accountIdCounter + 1
+//     printfn "Stworzono nowe konto o ID: %d" account.Id
+
+// let deposit id amount =
+//     match Map.tryFind id accounts with
+//     | Some account ->
+//         let updatedAccount = { account with Balance = account.Balance + amount }
+//         accounts <- Map.add id updatedAccount accounts
+//         printfn "Wpłacono %.2f. Nowe saldo: %.2f" amount updatedAccount.Balance
+//     | None -> printfn "Konto o ID %d nie istnieje." id
+
+// let withdraw id amount =
+//     match Map.tryFind id accounts with
+//     | Some account when account.Balance >= amount ->
+//         let updatedAccount = { account with Balance = account.Balance - amount }
+//         accounts <- Map.add id updatedAccount accounts
+//         printfn "Wypłacono %.2f. Nowe saldo: %.2f" amount updatedAccount.Balance
+//     | Some _ -> printfn "Brak wystarczających środków."
+//     | None -> printfn "Konto o ID %d nie istnieje." id
+
+// let checkBalance id =
+//     match Map.tryFind id accounts with
+//     | Some account -> printfn "Saldo konta %d: %.2f" id account.Balance
+//     | None -> printfn "Konto o ID %d nie istnieje." id
+
+// [<EntryPoint>]
+// let main _ =
+//     let mutable run = true
+//     while run do
+//         printfn "Wybierz opcję:\n1. Stwórz nowe konto\n2. Wpłać środki\n3. Wypłać środki\n4. Sprawdź saldo\n5. Wyjdź"
+//         match Console.ReadLine() with
+//         | "1" -> createAccount()
+//         | "2" ->
+//             printf "ID konta: "
+//             let id = Console.ReadLine() |> int
+//             printf "Kwota do wpłaty: "
+//             let amount = Console.ReadLine() |> float
+//             deposit id amount
+//         | "3" ->
+//             printf "ID konta: "
+//             let id = Console.ReadLine() |> int
+//             printf "Kwota do wypłaty: "
+//             let amount = Console.ReadLine() |> float
+//             withdraw id amount
+//         | "4" ->
+//             printf "ID konta: "
+//             let id = Console.ReadLine() |> int
+//             checkBalance id
+//         | "5" -> run <- false
+//         | _ -> printfn "Nieprawidłowa opcja."
+
+//     0
+
+// #Zad5
+
+// open System
+// open System.Collections.Generic
+
+// let emptyBoard = Array.init 9 (fun _ -> ' ')
+// let winningPositions = [| [|0; 1; 2|]; [|3; 4; 5|]; [|6; 7; 8|]; [|0; 3; 6|]; [|1; 4; 7|]; [|2; 5; 8|]; [|0; 4; 8|]; [|2; 4; 6|] |]
+
+// let printBoard board =
+//     for i in 0..2 do
+//         printfn "%c | %c | %c" board.[i * 3] board.[i * 3 + 1] board.[i * 3 + 2]
+//         if i < 2 then printfn "--+---+--"
+
+// let checkWinner board player =
+//     winningPositions |> Array.exists (fun positions -> positions |> Array.forall (fun idx -> board.[idx] = player))
+
+// let playerMove board =
+//     printf "Wybierz pozycję (0-8): "
+//     let pos = Console.ReadLine() |> int
+//     if pos >= 0 && pos < 9 && board.[pos] = ' ' then
+//         board.[pos] <- 'X'
+//     else
+//         printfn "Nieprawidłowy ruch. Spróbuj ponownie."
+//         playerMove board
+
+// let computerMove board =
+//     let emptyPositions = [ for i in 0..8 do if board.[i] = ' ' then yield i ]
+//     if emptyPositions.Length > 0 then
+//         let rand = Random()
+//         let pos = emptyPositions.[rand.Next(emptyPositions.Length)]
+//         board.[pos] <- 'O'
+
+// [<EntryPoint>]
+// let main _ =
+//     let board = Array.copy emptyBoard
+//     let mutable gameActive = true
+//     while gameActive do
+//         printBoard board
+//         playerMove board
+//         if checkWinner board 'X' then
+//             printfn "Gratulacje! Wygrałeś!"
+//             gameActive <- false
+//         elif not (Array.contains ' ' board) then
+//             printfn "Remis!"
+//             gameActive <- false
+//         else
+//             computerMove board
+//             if checkWinner board 'O' then
+//                 printfn "Przegrałeś!"
+//                 gameActive <- false
+
+//     0
+
+
