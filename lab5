@@ -1,0 +1,94 @@
+// #let rec countDown n=
+//     if n<=0 then
+//         printf "Koniec obliczeń"
+//     else//         printfn "n =%d" n
+//         countDown (n-1)
+//  countDown 5       
+//  let sumaTailRec n =
+//      let rec aux n acc =
+//          if n<=0 then acc
+//          else aux (n-1) (acc+n)
+//     aux n 0
+// let wynik = sumaTailRec 5
+// 
+// printfn "wynik %d"wynik
+// let numbers = [1;2;3;4;5;6]
+// //let numers1 = list.iter(fun x ->printfn "element: %d"x)
+// let numbers2 = list.map(fun x=> x * X) numbers
+// list.filter
+// 
+//Zad1 
+// let rec fibRec n =
+//     if n <=0  then 0
+//     elif n = 1 then 1
+//     else fibRec (n-1) + fibRec (n-2)
+// let wynik = fibRec 10// printfn "Fib 10 = %d " wynik
+// let fibTailRec n =
+//     let rec aux n a b=
+//         if n<=0 then a
+//         elif n = 1 then b
+//         else aux (n-1) + b (a +b)
+//     aux n 0 1
+
+//Zad2
+// type BinaryTreec<'T> =
+//     | Empty
+//     | Node of 'T * BinaryTreec<'T> * T BinaryTreec<'t>
+// let myTree =
+//     Node(10,
+//         Node(5, Node(2, Empty, Empty), Node(7, Empty, Empty)),
+//         Node(15, Node(12, Empty, Empty), Node(20, Empty, Empty)))    
+// let rec searchTreeValue tree value =
+//     match tree with//     |Empty -> false
+//     |Node(v,left , right) ->
+//        if v = value then true  
+//        elif searchTreeValue left value then true 
+//        else searchTreeValue right Value 
+// let found = searchTreeValue myTree 10
+// printf "Czy znaleziono element 10? %d" found
+
+// //Zad3
+
+// open System
+
+// let rec permute list =
+//     match list with
+//     | [] -> [[]]
+//     | x :: xs -> 
+//         permute xs
+//         |> List.collect (fun p -> 
+//             [ for i in 0 .. List.length p -> 
+//                 let (front, back) = List.splitAt i p
+//                 front @ [x] @ back ])
+
+// [1; 2; 3]
+// |> permute
+// |> List.iter (printfn "%A")
+
+
+// //Zad4
+// let rec hanoi n from_ to_ aux =
+//     if n = 1 then 
+//         printfn "Move disk from %s to %s" from_ to_
+//     else
+//         hanoi (n - 1) from_ aux to_
+//         hanoi 1 from_ to_ aux
+//         hanoi (n - 1) aux to_ from_
+
+// hanoi 3 "A" "C" "B"
+
+
+// //Zad5
+// let rec quicksort list =
+//     match list with
+//     | [] -> []
+//     | pivot :: tail ->
+//         let smaller = tail |> List.filter (fun x -> x <= pivot)
+//         let larger = tail |> List.filter (fun x -> x > pivot)
+//         quicksort smaller @ [pivot] @ quicksort larger
+
+// [3; 6; 8; 10; 1; 2; 1]
+// |> quicksort
+// |> printfn "Sorted: %A"
+
+
