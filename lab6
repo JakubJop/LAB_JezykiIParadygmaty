@@ -1,0 +1,140 @@
+//Zad1
+//let countWords (text: string) =
+//    let words = text.Split([|' '; '\t'; '\n'; '\r'|], System.StringSplitOptions.RemoveEmptyEntries)
+//    words.Length
+
+//let countCharactersWithoutSpaces (text: string) =
+//    text.Replace(" ", "").Length
+
+//[<EntryPoint>]
+//let main argv =
+//    printfn "Podaj tekst:"
+//    let inputText = Console.ReadLine()
+  
+//  let wordCount = countWords inputText
+//  let charCountWithoutSpaces = countCharactersWithoutSpaces inputText
+   
+//    printfn "Liczba słów: %d" wordCount
+//    printfn "Liczba znaków (bez spacji): %d" charCountWithoutSpaces
+
+//    0  
+
+// //Zad2
+// let isPalindrome (text: string) =
+    
+//     let cleanedText = text.Replace(" ", "").ToLower()
+    
+//     cleanedText = String(Array.rev (cleanedText.ToCharArray()))
+
+// [<EntryPoint>]
+// let main argv =
+    
+//     printfn "Podaj tekst:"
+//     let inputText = Console.ReadLine()
+
+    
+//     if isPalindrome inputText then
+//         printfn "Tekst jest palindromem!"
+//     else
+//         printfn "Tekst nie jest palindromem."
+
+//     0  
+
+
+// //Zad3
+
+// let removeDuplicates (words: string list) =
+//     words |> List.distinct
+
+
+// [<EntryPoint>]
+// let main argv =
+    
+//     printfn "Podaj słowa oddzielone spacjami:"
+//     let input = Console.ReadLine()
+
+//     let words = input.Split(' ') |> Array.toList
+
+   
+//     let uniqueWords = removeDuplicates words
+
+    
+//     printfn "Unikalne słowa:"
+//     uniqueWords |> List.iter (printfn "%s")
+
+//     0  
+
+
+
+//Zad4
+
+// let changeFormat (input: string) =
+//     let parts = input.Split(';') |> Array.map (fun part -> part.Trim())
+//     if parts.Length = 3 then
+//         let firstName = parts.[0]
+//         let lastName = parts.[1]
+//         let age = parts.[2]
+//         sprintf "%s, %s (%s lat)" lastName firstName age
+//     else
+//         "Błędny format"
+
+// [<EntryPoint>]
+// let main argv =
+
+//     printfn "Podaj dane w formacie 'imię; nazwisko; wiek':"
+//     let input = Console.ReadLine()
+
+ 
+//     let formatted = changeFormat input
+
+   
+//     printfn "%s" formatted
+
+//     0  
+
+
+//Zad5
+
+// let longestWord (text: string) =
+//     let words = text.Split(' ') |> Array.toList
+//     let longest = words |> List.maxBy String.length
+//     longest, String.length longest
+
+// [<EntryPoint>]
+// let main argv =
+  
+//     printfn "Podaj tekst:"
+//     let inputText = Console.ReadLine()
+
+
+//     let word, length = longestWord inputText
+
+ 
+//     printfn "Najdłuższe słowo: %s" word
+//     printfn "Długość najdłuższego słowa: %d" length
+
+//     0  
+
+
+// Zad6
+
+
+// let longestWord (text: string) =
+//     let words = text.Split(' ') |> Array.toList
+//     let longest = words |> List.maxBy String.length
+//     longest, String.length longest
+
+// [<EntryPoint>]
+// let main argv =
+
+//     printfn "Podaj tekst:"
+//     let inputText = Console.ReadLine()
+
+
+//     let word, length = longestWord inputText
+
+  
+//     printfn "Najdłuższe słowo: %s" word
+//     printfn "Długość najdłuższego słowa: %d" length
+
+//     0  
