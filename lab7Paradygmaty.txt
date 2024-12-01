@@ -1,0 +1,180 @@
+// zad1
+// open System
+// type Book(title: string,author: string, pages: int)=
+//      member this.Title = title
+//      member this.Author = author
+//      member this.Pages = pages
+
+//      member this.GetInfo()=
+//         sprintfn "Tytuł: %s \nAuthor: %s  \nLiczba stron: %d" this.Title this.Author this.Pages
+
+// type User(name: string )+
+//    member this>name= name
+//    member this.BorrowedBooks = new List<Book>()
+
+//    member this.BorrowedBook(book: book)=
+//        this.BorrowedBooks.Add(book)
+//        printfn "%s:wypożyczył książke: %S " this.Name Book.Title
+
+
+//     member this.ReturnBook(book: Book)=
+//         if this.BorrowedBooks.Remove(book) then
+//             printfn "%s zwrócił książke: %s" this.Name book.Title
+//         else printfn "%s nie ma wypożyczonej książki: %s " this.Name book.Title
+
+// type Library()=
+//     let books = new List<Books>()
+
+
+//     member this.AddBook(book: Book)=
+//         books.Add(book)
+//         printfn "Dodano książke: %s" book.Title
+
+
+//     member this.RemoveBook(book: Book)=
+//         if books.Remove(book) then
+//            printfn "%s Usunięto książke: %s" book.Title
+//         else printfn "%s Książka nie została znaleziona: %s " book.Title 
+
+    
+//     member this.ListBooks()=
+//         printfn "Książka w bibliotece: "
+//         for book in books do  
+//             printfn "- %s"  (book.GetInfo())
+
+
+
+// //main
+// [<EntryPoint>]
+// let main argv=
+//     let library = Library()
+
+//     let book1= Book("Książka 1", "Autor 1", 123)
+//     let book2= Book("Książka 2", "Autor 2", 1000)
+//     let book3= Book("Książka 3", "Autor 3", 12)
+
+//     library.AddBook(book1)
+//     library.AddBook(book2)
+//     library.AddBook(book3)
+
+//     library.ListBooks()
+
+//     let user= user("Jan Kowalski")
+
+//     user.BorrowedBook(book1)
+//     user.BorrowedBook(bok2)
+
+//     user.returnBook(book1)
+
+
+//     library.ListBooks()
+
+//     0
+
+
+//Zad2
+
+// open System
+// open System.Collections.Generic
+
+// // Klasa reprezentująca konto bankowe
+// type BankAccount(accountNumber: string, initialBalance: decimal) =
+//     let mutable balance = initialBalance
+
+//     member this.AccountNumber = accountNumber
+//     member this.Balance = balance
+
+//     member this.Deposit(amount: decimal) =
+//         if amount <= 0m then
+//             failwith "Kwota wpłaty musi być większa od zera."
+//         else
+//             balance <- balance + amount
+//             printfn "Wpłacono: %.2f. Nowe saldo: %.2f" amount balance
+
+//     member this.Withdraw(amount: decimal) =
+//         if amount <= 0m then
+//             failwith "Kwota wypłaty musi być większa od zera."
+//         elif amount > balance then
+//             failwith "Brak wystarczających środków na koncie."
+//         else
+//             balance <- balance - amount
+//             printfn "Wypłacono: %.2f. Nowe saldo: %.2f" amount balance
+
+// // Klasa zarządzająca kontami bankowymi
+// type Bank() =
+//     let accounts = Dictionary<string, BankAccount>()
+
+//     member this.CreateAccount(accountNumber: string, initialBalance: decimal) =
+//         if accounts.ContainsKey(accountNumber) then
+//             failwith "Konto o podanym numerze już istnieje."
+//         else
+//             let account = BankAccount(accountNumber, initialBalance)
+//             accounts.Add(accountNumber, account)
+//             printfn "Utworzono konto o numerze: %s z saldem początkowym: %.2f" accountNumber initialBalance
+
+//     member this.GetAccount(accountNumber: string) =
+//         if accounts.ContainsKey(accountNumber) then
+//             Some(accounts.[accountNumber])
+//         else
+//             printfn "Nie znaleziono konta o numerze: %s" accountNumber
+//             None
+
+//     member this.UpdateAccount(accountNumber: string, newBalance: decimal) =
+//         match this.GetAccount(accountNumber) with
+//         | Some account ->
+//             if newBalance < 0m then
+//                 failwith "Saldo nie może być ujemne."
+//             else
+//                 account.Deposit(newBalance - account.Balance)
+//         | None -> ()
+
+//     member this.DeleteAccount(accountNumber: string) =
+//         if accounts.Remove(accountNumber) then
+//             printfn "Konto o numerze %s zostało usunięte." accountNumber
+//         else
+//             printfn "Nie znaleziono konta o numerze: %s" accountNumber
+
+// // Program główny
+// [<EntryPoint>]
+// let main argv =
+//     let bank = Bank()
+
+//     // Tworzenie kont
+//     bank.CreateAccount("12345", 1000m)
+//     bank.CreateAccount("67890", 500m)
+
+//     // Odczyt konta
+//     match bank.GetAccount("12345") with
+//     | Some account ->
+//         printfn "Konto: %s, Saldo: %.2f" account.AccountNumber account.Balance
+//     | None -> ()
+
+//     // Wpłata
+//     match bank.GetAccount("12345") with
+//     | Some account -> account.Deposit(200m)
+//     | None -> ()
+
+//     // Wypłata
+//     match bank.GetAccount("12345") with
+//     | Some account -> account.Withdraw(300m)
+//     | None -> ()
+
+//     // Aktualizacja salda
+//     bank.UpdateAccount("12345", 1500m)
+
+//     // Usunięcie konta
+//     bank.DeleteAccount("67890")
+
+//     // Próba odczytu usuniętego konta
+//     bank.GetAccount("67890") |> ignore
+
+//     0 // Zakończenie programu
+
+
+
+
+
+
+
+
+
